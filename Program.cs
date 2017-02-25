@@ -23,9 +23,9 @@ namespace CSCorePlaying {
 			//set effect queue
 			modifierQueue = new Queue<SpectrumModifiers.IRGBSpectrumModifier>();
 			//add modifiers to the queue
-			//modifierQueue.Enqueue(new SpectrumModifiers.RollingAverager(30, 9));
+			modifierQueue.Enqueue(new SpectrumModifiers.RollingAverager(30, 9));
 			//modifierQueue.Enqueue(new SpectrumModifiers.SpectrumReverser());
-			//modifierQueue.Enqueue(new SpectrumModifiers.ReflectedSpectrum(false,false));
+			modifierQueue.Enqueue(new SpectrumModifiers.ReflectedSpectrum(false,false));
 			//modifierQueue.Enqueue(new SpectrumModifiers.Bars.BaseBarModifier(0,5));
 
 

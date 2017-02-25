@@ -23,18 +23,18 @@ namespace CSCorePlaying.SpectrumProviders {
 			SpectrumPointData[] spectrumPoints = CalculateSpectrumPoints(1, fftBuffer);
 			int[] arrRGB = new int[spectrumPoints.Length * 3];
 			int[] rgbVals;
-			for (int i = 0; i < spectrumPoints.Length; i++) {
+            int pos;
+            for (int i = 0; i < spectrumPoints.Length; i++) {
 				SpectrumPointData p = spectrumPoints[i];
 				p.Value = p.Value * brightnessModifier;
 				p.Value = (p.Value > maximumBrightness ? maximumBrightness : (p.Value < minimumBrightness ? minimumBrightness : p.Value));
-				int pos = ((int)((i/(spectrumPoints.Length))* 768.0) + basePos) % 768;
+				pos = ((int)((i/((float)spectrumPoints.Length))* 768.0) + basePos) % 768;
 				rgbVals = wheel(pos);
-
-				arrRGB[i * 3] = (int)(rgbVals[0]*p.Value);
+                arrRGB[i * 3] = (int)(rgbVals[0] *p.Value);
 				arrRGB[i * 3 + 1] = (int)(rgbVals[1] * p.Value);
-				arrRGB[i * 3 + 2] = (int)(rgbVals[2] * p.Value);
-			}
-			Console.WriteLine();
+                arrRGB[i * 3 + 2] = (int)(rgbVals[2] * p.Value);
+            }
+            Console.WriteLine();
 			this.basePos+=this.speed;
 			this.basePos %= 768;
 			return arrRGB;
