@@ -23,10 +23,11 @@ namespace CSCorePlaying {
 			//set effect queue
 			modifierQueue = new Queue<SpectrumModifiers.IRGBSpectrumModifier>();
 			//add modifiers to the queue
-			modifierQueue.Enqueue(new SpectrumModifiers.RollingAverager(30, 9));
-			//modifierQueue.Enqueue(new SpectrumModifiers.SpectrumReverser());
-			modifierQueue.Enqueue(new SpectrumModifiers.ReflectedSpectrum(false,false));
-			//modifierQueue.Enqueue(new SpectrumModifiers.Bars.BaseBarModifier(0,5));
+			modifierQueue.Enqueue(new SpectrumModifiers.RollingAverager(30, 5));
+            //modifierQueue.Enqueue(new SpectrumModifiers.RollingAverager(30, 9));
+            //modifierQueue.Enqueue(new SpectrumModifiers.SpectrumReverser());
+            modifierQueue.Enqueue(new SpectrumModifiers.ReflectedSpectrum(true,false));
+			//modifierQueue.Enqueue(new SpectrumModifiers.Bars.BaseBarModifier(0,1));
 
 
 			const FftSize objFFTSize = FftSize.Fft4096;
@@ -55,7 +56,7 @@ namespace CSCorePlaying {
 
 
 				//create RGB spectrum object
-				rgbSpectrizer = new OpacityRainbowSpectrum(objFFTSize, 1, 0, 1, 2.0)
+				rgbSpectrizer = new OpacityRainbowSpectrum(objFFTSize, 1, 0.0, 1, 20,0.0)
                 {
                     SpectrumProvider = spectrumProvider,
 					UseAverage = false,
@@ -63,8 +64,26 @@ namespace CSCorePlaying {
 					IsXLogScale = true,
 					ScalingStrategy = ScalingStrategy.Linear
 				};
+                /*This is a preset that's good for music
+				rgbSpectrizer = new OpacityRainbowSpectrum(objFFTSize, 1, 0.0, 1, 20,0.0)
+                {
+                    SpectrumProvider = spectrumProvider,
+					UseAverage = false,
+					LightCount = numLights,
+					IsXLogScale = true,
+					ScalingStrategy = ScalingStrategy.Linear
+				};
+                */
+                //This is an off switch essentially
+                if (false)
+                    rgbSpectrizer = new OpacityRainbowSpectrum(objFFTSize, 1, 0, 0)
+                    {
+                        SpectrumProvider = spectrumProvider,
+                        LightCount = numLights,
+                        ScalingStrategy = ScalingStrategy.Linear
+                    };
 
-				Console.WriteLine("starting");
+                Console.WriteLine("starting");
 				capture.Start();
 				timer.Start();
 				//keep console alive
@@ -101,4 +120,4 @@ namespace CSCorePlaying {
 	 * Staple colors: blue, green, orange, pink
 	 * secondary colors: cyan, yellow, red, purple
 	 * */
-}
+            }

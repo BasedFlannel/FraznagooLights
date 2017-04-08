@@ -88,5 +88,10 @@ namespace CSCorePlaying {
 		protected int clamp(int num, int max = 255, int min = 0) {
 			return Math.Min(Math.Max(num, min), max);
 		}
-	}
+
+        protected double clampDouble(double num, double max = 1.0, double min = 0)
+        {
+            return Math.Min(Math.Max(num, min), max);
+        }
+    }
 }
