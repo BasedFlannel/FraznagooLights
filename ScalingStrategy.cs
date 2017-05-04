@@ -1,9 +1,9 @@
 ﻿namespace CSCorePlaying
 {
-    public enum ScalingStrategy
-    {
-        Decibel,
-        Linear,
-        Sqrt
-    }
+	public enum ScalingStrategy
+	{
+		Decibel,
+		Linear,
+		Sqrt
+	}
 }
