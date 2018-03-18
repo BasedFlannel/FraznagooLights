@@ -95,7 +95,7 @@ namespace CSCorePlaying {
 		}
 
 		private static void onTimerTick(object source, System.Timers.ElapsedEventArgs e) {
-			String server = "192.168.1.174";
+			String server = "192.168.1.106";
 			//set up connection
 			Socket soc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse(server);
