@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace CSCorePlaying.SpectrumModifiers.Bars {
 	class BaseBarModifier:IRGBSpectrumModifier {
+		/* I don't actually remember what this does at all.
 		int r, g, b, minIndex, maxIndex;
 
 		public BaseBarModifier(int startBar = 0, int endBar = -1) {
 			this.minIndex = startBar*3;
 			this.maxIndex = endBar*3;
 		}
-
-		public override void modifySpectrum(int[] input) {
-			createBar(input);
+		*/
+		public override void modifySpectrum(Color[] input) {
+			//createBar(input);
 		}
-
+		/*
 		public void createBar(int[] input, int index = 0) {
 			if (this.maxIndex <= 0) {
 				r = input[index];
@@ -36,6 +37,6 @@ namespace CSCorePlaying.SpectrumModifiers.Bars {
 				input[i + 1] = g;
 				input[i + 2] = b;
 			}
-		}
+		}*/
 	}
 }

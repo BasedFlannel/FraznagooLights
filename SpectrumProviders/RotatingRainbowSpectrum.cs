@@ -12,22 +12,17 @@ namespace CSCorePlaying {
 			baseWheelPos = 0;
 		}
 
-		protected override int[] CreateRGBSpectrumInternal(float[] fftBuffer) {
+		protected override Color[] CreateRGBSpectrumInternal(float[] fftBuffer) {
 			SpectrumPointData[] spectrumPoints = CalculateSpectrumPoints(512, fftBuffer);
-			int[] arrRGB = new int[spectrumPoints.Length * 3];
-			int[] rgbVals;
+			Color[] arrColors = Color.createEmptyArray(spectrumPoints.Length);
 
 			this.baseWheelPos++;
 			this.baseWheelPos %= 768;
 
 			for (int i = 0; i < spectrumPoints.Length; i++) {
-				SpectrumPointData p = spectrumPoints[i];
-				rgbVals = wheel((int)(baseWheelPos + p.Value)%768);
-				arrRGB[i * 3] = rgbVals[0];
-				arrRGB[i * 3 + 1] = rgbVals[1];
-				arrRGB[i * 3 + 2] = rgbVals[2];
+				arrColors[i].setTo(wheel((int)(baseWheelPos + spectrumPoints[i].Value)%768));
 			}
-			return arrRGB;
+			return arrColors;
 		}
 	}
 }

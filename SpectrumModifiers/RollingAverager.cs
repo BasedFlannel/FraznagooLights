@@ -13,8 +13,15 @@ namespace CSCorePlaying.SpectrumModifiers {
 			averageHistory = new int[historySize, lightCount*3];
 			currentRow = 0;
 		}
-		public override void modifySpectrum(int[] input) {
-			
+		public override void modifySpectrum(Color[] inputColors) {
+			int[] input = new int[inputColors.Length * 3];
+
+			//QuickN'Dirty Boy
+			for (int i = 0; i<inputColors.Length; i++) {
+				input[i*3] = inputColors[i].red;
+				input[i * 3 + 1] = inputColors[i].green;
+				input[i * 3 + 2] = inputColors[i].blue;
+			}
 			for (int i = 0; i < averageHistory.GetLength(1); i++) {
 				averageHistory[currentRow, i] = input[i];
 				input[i] = 0;
@@ -32,6 +39,12 @@ namespace CSCorePlaying.SpectrumModifiers {
 				input[i] = rgbClamp((int)Math.Round((double)((double)input[i]/(double)averageHistory.GetLength(0))));
 			}
 
+			//reverse taht Quickn'Dirty Boyo
+			for (int i = 0; i < inputColors.Length; i++) {
+				inputColors[i].red = input[i * 3];
+				inputColors[i].green = input[i * 3 + 1];
+				inputColors[i].blue = input[i * 3 + 2];
+			}
 			return;
 		}
 	}

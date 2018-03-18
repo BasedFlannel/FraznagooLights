@@ -24,7 +24,7 @@ namespace CSCorePlaying {
 			}
 		}
 
-		public int[] CreateRGBSpectrum() {
+		public Color[] CreateRGBSpectrum() {
 
 			var fftBuffer = new float[(int)FftSize];
 			
@@ -38,47 +38,33 @@ namespace CSCorePlaying {
 		}
 
 		//internal method to create the actual spectrum
-		protected virtual int[] CreateRGBSpectrumInternal(float[] fftBuffer) {
+		protected virtual Color[] CreateRGBSpectrumInternal(float[] fftBuffer) {
 			SpectrumPointData[] spectrumPoints = CalculateSpectrumPoints(512, fftBuffer);
-			int[] arrRGB = new int[spectrumPoints.Length * 3];
+			Color[] arrColors = Color.createEmptyArray(spectrumPoints.Length);
 			for (int i = 0; i < spectrumPoints.Length; i++) {
-				SpectrumPointData p = spectrumPoints[i];
-				int lightIndex = p.SpectrumPointIndex;
-				double lightVal = p.Value;
-				arrRGB[i * 3] = (int)lightVal;
-				arrRGB[i * 3 + 1] = (int)lightVal;
-				arrRGB[i * 3 + 2] = (int)lightVal;
+				int lightVal = (int)spectrumPoints[i].Value;
+				arrColors[i].setTo(new Color(lightVal, lightVal, lightVal));
 			}
 			
-			return arrRGB;
+			return arrColors;
 		}
 
-		protected virtual int[] wheel(int pos) {
-			int[] arrRGB = { 0, 0, 0 };
+		protected virtual Color wheel(int pos) {
+			Color c;
 			int val;
 			clamp(pos, 768);
 			val = getSinedValue(pos);
 			if (pos < 256) {
-				
-				arrRGB[0] = 0;
-				arrRGB[1] = val;
-				arrRGB[2] = 255-val;
+				c = new CSCorePlaying.Color(0, val, 255 - val);
 			}
 			else if(pos < 512){
-				pos -= 256;
-				arrRGB[0] = val;
-				arrRGB[1] = 255 - val;
-				arrRGB[2] = 0;
+				c = new CSCorePlaying.Color(val, 255 - val, 0);
 			}
 			else {
-				pos -= 512;
-				pos &= 255;
-				arrRGB[0] = 255-val;
-				arrRGB[1] = 0;
-				arrRGB[2] = val;
+				c = new CSCorePlaying.Color(255 - val, 0, val);
 			}
 
-			return arrRGB;
+			return c;
 		}
 		protected int getSinedValue(int value) {
 			value %= 256;
@@ -92,6 +78,19 @@ namespace CSCorePlaying {
 		protected double clampDouble(double num, double max = 1.0, double min = 0)
 		{
 			return Math.Min(Math.Max(num, min), max);
+		}
+
+		//given two colors, returns a color that is a mixture of the two.
+		//position is a number representing the strength of c2 in the interpolation.
+		//e.g. if position is 0.8, you will recieve a color that's 80% of the way between c1 and c2, being noticably closer to c2.
+		// c1-------*-c2
+		//at position=0 the returned color will be identical to c1, and position=1 the returned color will be identical to c2.
+		protected Color interpolateColor(Color c1, Color c2, double position = 0.5) {
+			return new Color(
+				(int)(c1.red*(1-position) + c2.red*position), 
+				(int)(c1.green * (1 - position) + c2.green * position), 
+				(int)(c1.blue * (1 - position) + c2.blue * position)
+			);
 		}
 	}
 }

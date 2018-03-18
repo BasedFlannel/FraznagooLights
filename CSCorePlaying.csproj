@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raindrops\RaindropLight.cs" />
     <Compile Include="Raindrops\RaindropSpectrumGenerator.cs" />
+    <Compile Include="SpectrumProviders\AssignedColorSpectrum.cs" />
     <Compile Include="SpectrumProviders\RGBSpectrum.cs" />
     <Compile Include="SpectrumProviders\RotatingRainbowSpectrum.cs" />
     <Compile Include="ScalingStrategy.cs" />

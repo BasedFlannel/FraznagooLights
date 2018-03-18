@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSCorePlaying.SpectrumModifiers {
 	class HighBandBar:IRGBSpectrumModifier {
-		public override void modifySpectrum(int[] input) {
+		public override void modifySpectrum(Color[] input) {
 			throw new NotImplementedException();
 		}
 	}

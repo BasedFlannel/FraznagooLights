@@ -12,29 +12,22 @@ namespace CSCorePlaying.SpectrumModifiers {
 			this.blnUseHalf = useHalf;
 			this.blnUseTopHalf = useTopHalf;
 		}
-		public override void modifySpectrum(int[] input) {
-			int[] averages = new int[input.Length / 2];
+		public override void modifySpectrum(Color[] input) {
+			Color[] averages = new Color[input.Length / 2];
 			if (this.blnUseHalf) {
-				int iOffset = this.blnUseTopHalf ? input.Length/2 : 0;
-				for (int i = 0; i<averages.Length; i++) {
-					averages[i] = input[i + iOffset];
-				}
+				int startPos = blnUseTopHalf ? input.Length / 2 : 0;
+				Array.Copy(input, startPos, averages, 0, averages.Length);
 			}
 			else {
-				for (int i = 0; i < input.Length; i += 6) {
-					averages[i / 2] = rgbClamp(((int)((input[i] + input[i + 3]) / 2.0)));
-					averages[i / 2 + 1] = rgbClamp(((int)((input[i + 1] + input[i + 4]) / 2.0)));
-					averages[i / 2 + 2] = rgbClamp(((int)((input[i + 2] + input[i + 5]) / 2.0)));
+				for (int i = 0; i < input.Length; i +=2) {
+					averages[i / 2] = Color.getAverageColor(input[i], input[i + 1]);
 				}
 			}
-			for (int i = 0; i < input.Length / 2; i++) {
-				input[i] = averages[i];
-			}
-			for (int i = input.Length - 3; i > input.Length / 2 - 1; i -= 3) {
-				input[i] = input[input.Length - 3 - i];
-				input[i + 1] = input[input.Length - 2 - i];
-				input[i + 2] = input[input.Length - 1 - i];
-			}
+
+			//averages set up, now duplicate them
+			Array.Copy(averages, input, averages.Length);
+			Array.Reverse(averages);
+			Array.Copy(averages,0, input,averages.Length, averages.Length);
 		}
 	}
 }
